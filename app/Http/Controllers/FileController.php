@@ -44,7 +44,7 @@ class FileController extends Controller
 
         $uploaded = $request->file('file');
 
-        $path = $uploaded->store("weddings/{$request->user()->wedding->id}/vault", 'public');
+        $path = $uploaded->store("weddings/{$request->user()->wedding->id}/vault", config('filesystems.default'));
 
         $request->user()->wedding->files()->create([
             'name' => $request->input('label') ?: $uploaded->getClientOriginalName(),
@@ -58,7 +58,7 @@ class FileController extends Controller
 
     public function destroy(File $file)
     {
-        Storage::disk('public')->delete($file->path);
+        Storage::disk(config('filesystems.default'))->delete($file->path);
         $file->delete();
 
         return redirect()->back()->with('success', 'File removed from Vault.');
@@ -66,7 +66,7 @@ class FileController extends Controller
 
     public function download(File $file)
     {
-        abort_unless(Storage::disk('public')->exists($file->path), 404);
-        return Storage::disk('public')->download($file->path, $file->name);
+        abort_unless(Storage::disk(config('filesystems.default'))->exists($file->path), 404);
+        return Storage::disk(config('filesystems.default'))->download($file->path, $file->name);
     }
 }
