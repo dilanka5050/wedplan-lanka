@@ -1,6 +1,6 @@
 # 💍 WedPlan Lanka
 
-A modern SaaS wedding planning web application for Sri Lankan couples built with Laravel 12, Filament Admin Panel, TailwindCSS, and Alpine.js.
+A modern SaaS wedding planning web application for Sri Lankan couples built with Laravel 12, TailwindCSS, and Alpine.js.
 
 ## Requirements
 
@@ -69,7 +69,7 @@ php artisan serve
 - 🎨 Full wedding templates
 - 🤝 Multi-user collaboration
 
-### Admin Panel (Filament)
+### Admin Panel
 - Manage users & upgrade to Pro
 - Manage weddings
 - Manage subscription plans
@@ -80,7 +80,6 @@ php artisan serve
 ```
 app/
 ├── Enums/          # UserRole, WeddingType, TaskStatus, Priority, RsvpStatus
-├── Filament/       # Admin panel resources
 ├── Http/
 │   ├── Controllers/    # Web controllers
 │   ├── Middleware/     # CheckPlanFeature, CheckPlanLimit
@@ -93,7 +92,6 @@ app/
 ## Tech Stack
 
 - **Backend:** Laravel 12, PHP 8.2
-- **Admin:** Filament 3.3
 - **Frontend:** TailwindCSS (CDN), Alpine.js
 - **Database:** MySQL
 - **Auth:** Custom (Laravel-based)

@@ -242,7 +242,7 @@
                     <span class="text-xs">💍</span>
                     @if(auth()->user()->wedding->wedding_date)
                     <span class="text-xs font-semibold text-pink-600">
-                        {{ max(0, now()->diffInDays(auth()->user()->wedding->wedding_date, false)) }} days left
+                        {{ max(0, round(now()->diffInHours(auth()->user()->wedding->wedding_date, false) / 24, 1)) }} days left
                     </span>
                     @else
                     <span class="text-xs font-semibold text-pink-600">Date not set</span>
