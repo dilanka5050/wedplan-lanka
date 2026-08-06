@@ -47,7 +47,7 @@ class InvitationController extends Controller
             'groom_surname'    => 'required|string|max:255',
             'wedding_day'      => 'required|string|max:255',
             'wedding_location' => 'required|string|max:255',
-            'venue_map_url'    => 'nullable|url|max:500',
+            'venue_map_url'    => ['nullable', 'string', 'max:2000'],
             'duration_from'    => 'required|string|max:50',
             'duration_to'      => 'required|string|max:50',
             'poruwa_time'      => 'required|string|max:50',
@@ -55,6 +55,12 @@ class InvitationController extends Controller
             'groom_phone'      => 'nullable|string|max:20',
             'template'         => ['required', 'in:' . implode(',', $validKeys)],
         ]);
+
+        // Extract src URL if user pasted a full <iframe> embed code
+        if (!empty($validated['venue_map_url']) && str_contains($validated['venue_map_url'], '<iframe')) {
+            preg_match('/src=["\']([^"\']+)["\']/', $validated['venue_map_url'], $m);
+            $validated['venue_map_url'] = $m[1] ?? null;
+        }
 
         $wedding->invitation()->updateOrCreate([], $validated);
 

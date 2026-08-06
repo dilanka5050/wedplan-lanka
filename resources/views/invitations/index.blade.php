@@ -91,13 +91,15 @@
                 <p class="text-xs text-gray-400 mt-1">Separate venue name and city with a comma</p>
             </div>
 
-            {{-- Venue Map URL --}}
+            {{-- Venue Map --}}
             <div>
-                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Venue Google Maps Link</label>
-                <input type="url" name="venue_map_url" value="{{ old('venue_map_url', $invitation?->venue_map_url) }}"
-                       placeholder="https://maps.google.com/?q=..."
+                <label class="block text-xs font-semibold text-gray-600 mb-1.5">Venue Location</label>
+                <input id="map-search" type="text"
+                       placeholder="Search for your venue..."
                        class="w-full px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:ring-2 focus:ring-pink-200 focus:border-pink-400 outline-none">
-                <p class="text-xs text-gray-400 mt-1">Paste the Google Maps share link for your venue</p>
+                <input type="hidden" name="venue_map_url" id="venue_map_url" value="{{ old('venue_map_url', $invitation?->venue_map_url) }}">
+                <div id="map-preview" class="mt-2 rounded-xl overflow-hidden border border-gray-200 {{ old('venue_map_url', $invitation?->venue_map_url) ? '' : 'hidden' }}" style="height:220px"></div>
+                <p class="text-xs text-gray-400 mt-1">Search and select your venue to pin it on the map</p>
             </div>
 
             {{-- Duration --}}
@@ -258,3 +260,35 @@
 </div>
 
 @endsection
+
+@push('scripts')
+<script>
+function initMap() {
+    const existingUrl = document.getElementById('venue_map_url').value;
+    const previewDiv  = document.getElementById('map-preview');
+
+    // If a saved URL exists, show the embed iframe on load
+    if (existingUrl) {
+        previewDiv.classList.remove('hidden');
+        previewDiv.innerHTML = `<iframe src="${existingUrl}" width="100%" height="220" style="border:0" allowfullscreen loading="lazy"></iframe>`;
+    }
+
+    const input       = document.getElementById('map-search');
+    const autocomplete = new google.maps.places.Autocomplete(input, { fields: ['geometry', 'name', 'place_id'] });
+
+    autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        if (!place.geometry) return;
+
+        const lat = place.geometry.location.lat();
+        const lng = place.geometry.location.lng();
+        const embedUrl = `https://www.google.com/maps/embed/v1/place?key={{ config('services.google_maps.key') }}&q=${encodeURIComponent(place.name)}&center=${lat},${lng}&zoom=16`;
+
+        document.getElementById('venue_map_url').value = embedUrl;
+        previewDiv.classList.remove('hidden');
+        previewDiv.innerHTML = `<iframe src="${embedUrl}" width="100%" height="220" style="border:0" allowfullscreen loading="lazy"></iframe>`;
+    });
+}
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key={{ config('services.google_maps.key') }}&libraries=places&callback=initMap" async defer></script>
+@endpush
