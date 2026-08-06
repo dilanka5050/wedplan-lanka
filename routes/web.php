@@ -35,6 +35,7 @@ Route::middleware('admin')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/settings',                  [AdminController::class, 'settings'])->name('settings');
     Route::post('/settings/debug',           [AdminController::class, 'toggleDebug'])->name('settings.debug');
     Route::post('/settings/template',        [AdminController::class, 'toggleTemplate'])->name('settings.template');
+    Route::post('/settings/price',           [AdminController::class, 'updatePrice'])->name('settings.price');
 });
 
 // Impersonation (admin accessing customer wedding)

@@ -6,6 +6,28 @@
 
 <div class="max-w-3xl space-y-6">
 
+    {{-- Pro Plan Price --}}
+    <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
+        <div class="flex items-start justify-between gap-6">
+            <div class="flex items-start gap-4">
+                <div class="w-11 h-11 rounded-xl bg-purple-50 flex items-center justify-center text-xl flex-shrink-0">💰</div>
+                <div>
+                    <h3 class="font-semibold text-gray-900 text-sm">Pro Plan Price</h3>
+                    <p class="text-xs text-gray-500 mt-1 max-w-md">Update the Pro plan price shown on the landing page and charged to customers. Current price: <strong>LKR {{ $proPlan ? number_format($proPlan->price, 0) : 'N/A' }}</strong></p>
+                </div>
+            </div>
+            <form method="POST" action="{{ route('admin.settings.price') }}" class="flex items-center gap-2 flex-shrink-0">
+                @csrf
+                <span class="text-sm font-semibold text-gray-500">LKR</span>
+                <input type="number" name="price" value="{{ $proPlan?->price }}" min="0" step="1"
+                       class="w-32 px-3 py-2 text-sm border border-gray-200 rounded-lg focus:ring-2 focus:ring-purple-200 focus:border-purple-400 outline-none">
+                <button class="px-5 py-2 text-sm font-semibold rounded-lg bg-purple-100 hover:bg-purple-200 text-purple-700 transition">
+                    Update
+                </button>
+            </form>
+        </div>
+    </div>
+
     {{-- Debug Mode --}}
     <div class="bg-white rounded-xl border border-gray-100 shadow-sm p-6">
         <div class="flex items-start justify-between gap-6">

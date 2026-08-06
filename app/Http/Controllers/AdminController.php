@@ -195,8 +195,16 @@ class AdminController extends Controller
         $debugMode       = (bool) Cache::get('admin_debug_mode', false);
         $disabled        = Cache::get('disabled_digital_templates', []);
         $templateStats   = $this->buildTemplateStats($disabled);
+        $proPlan         = Plan::where('slug', 'pro')->first();
 
-        return view('admin.settings', compact('debugMode', 'templateStats'));
+        return view('admin.settings', compact('debugMode', 'templateStats', 'proPlan'));
+    }
+
+    public function updatePrice(Request $request)
+    {
+        $request->validate(['price' => 'required|numeric|min:0']);
+        Plan::where('slug', 'pro')->update(['price' => $request->price]);
+        return back()->with('success', 'Pro plan price updated.');
     }
 
     public function toggleDebug()
