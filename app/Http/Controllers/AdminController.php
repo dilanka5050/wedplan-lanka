@@ -173,7 +173,7 @@ class AdminController extends Controller
 
         $deleted = 0;
         foreach ($wedding->files as $file) {
-            Storage::disk('public')->delete($file->path);
+            Storage::disk(config('filesystems.default'))->delete($file->path);
             $file->delete();
             $deleted++;
         }

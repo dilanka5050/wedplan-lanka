@@ -382,7 +382,7 @@ class DigitalInvitationController extends Controller
         ]);
 
         foreach ($request->file('gallery_photos') as $uploaded) {
-            $path = $uploaded->store("weddings/{$wedding->id}/vault", 'public');
+            $path = $uploaded->store("weddings/{$wedding->id}/vault", config('filesystems.default'));
             $wedding->files()->create([
                 'name'  => $uploaded->getClientOriginalName(),
                 'path'  => $path,
@@ -400,9 +400,27 @@ class DigitalInvitationController extends Controller
         $wedding = $request->user()->wedding;
         abort_unless($file->wedding_id === $wedding->id && $file->usage === 'invitation_gallery', 403);
 
-        Storage::disk('public')->delete($file->path);
+        Storage::disk(config('filesystems.default'))->delete($file->path);
         $file->delete();
 
         return back()->with('gallery_success', 'Photo removed.');
+    }
+
+    public function galleryStream(Request $request, File $file)
+    {
+        $wedding = $request->user()->wedding;
+        abort_unless($file->wedding_id === $wedding->id, 403);
+
+        $disk = config('filesystems.default');
+        abort_unless(Storage::disk($disk)->exists($file->path), 404);
+
+        $mime = Storage::disk($disk)->mimeType($file->path);
+        return response()->stream(function () use ($disk, $file) {
+            echo Storage::disk($disk)->get($file->path);
+        }, 200, [
+            'Content-Type'        => $mime,
+            'Content-Disposition' => 'inline; filename="' . $file->name . '"',
+            'Cache-Control'       => 'private, max-age=3600',
+        ]);
     }
 }

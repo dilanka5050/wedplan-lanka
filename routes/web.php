@@ -104,6 +104,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/vault', [FileController::class, 'store'])->name('vault.store')->middleware('check.limit:uploads');
         Route::delete('/vault/{file}', [FileController::class, 'destroy'])->name('vault.destroy');
         Route::get('/vault/{file}/download', [FileController::class, 'download'])->name('vault.download');
+        Route::get('/vault/{file}/stream', [FileController::class, 'stream'])->name('vault.stream');
 
         // Guests
         Route::get('/guests', [GuestController::class, 'index'])->name('guests.index');
@@ -145,6 +146,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
             Route::post('/digital-invitations/set-template', [DigitalInvitationController::class, 'setTemplate'])->name('digital-invitations.set-template');
             Route::post('/digital-invitations/gallery/upload', [DigitalInvitationController::class, 'galleryUpload'])->name('digital-invitations.gallery.upload');
             Route::delete('/digital-invitations/gallery/{file}', [DigitalInvitationController::class, 'galleryDelete'])->name('digital-invitations.gallery.delete');
+            Route::get('/digital-invitations/gallery/{file}/stream', [DigitalInvitationController::class, 'galleryStream'])->name('digital-invitations.gallery.stream');
         });
 
         // Seating Plan (Pro feature)

@@ -127,7 +127,7 @@
                 <div class="grid grid-cols-3 gap-2 mb-4">
                     @foreach($galleryPhotos as $photo)
                     <div class="relative group rounded-lg overflow-hidden aspect-square bg-gray-100">
-                        <img src="{{ Storage::url($photo->path) }}" alt="" class="w-full h-full object-cover">
+                        <img src="{{ $photo->url }}" alt="" class="w-full h-full object-cover">
                         <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition">
                             <button type="button" onclick="deletePhoto({{ $photo->id }}, this)"
                                     class="text-white text-xs bg-red-500 px-2 py-1 rounded-lg">🗑 Remove</button>

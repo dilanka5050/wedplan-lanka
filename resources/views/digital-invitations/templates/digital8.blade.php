@@ -572,8 +572,8 @@ body{background:var(--dark);font-family:'Noto Sans Sinhala','Cormorant Garamond'
          style="grid-template-columns:repeat({{ min($galleryPhotos->count(), 3) }},1fr);">
       @foreach($galleryPhotos as $i => $photo)
       <div class="gallery-item {{ $i === 0 && $galleryPhotos->count() > 2 ? 'gallery-item-wide' : '' }}"
-           onclick="openLightbox('{{ Storage::url($photo->path) }}')">
-        <img src="{{ Storage::url($photo->path) }}" alt="Wedding photo" loading="lazy">
+           onclick="openLightbox('{{ $photo->url }}')">
+        <img src="{{ $photo->url }}" alt="Wedding photo" loading="lazy">
         <div class="gallery-overlay"><span>🔍</span></div>
       </div>
       @endforeach

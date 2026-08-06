@@ -205,7 +205,7 @@
                 {{-- Preview area --}}
                 @if($meta['isImage'])
                     {{-- Actual image: show thumbnail, click opens lightbox --}}
-                    <img src="{{ Storage::url($file->path) }}"
+                    <img src="{{ $file->url }}"
                          alt="{{ $file->name }}"
                          @click="lightbox = true"
                          class="w-full object-cover cursor-zoom-in group-hover:scale-105 transition-transform duration-500">
@@ -214,7 +214,7 @@
                     <div x-show="lightbox" x-cloak @click.self="lightbox = false"
                          class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
                         <div class="relative max-w-4xl w-full">
-                            <img src="{{ Storage::url($file->path) }}" alt="{{ $file->name }}"
+                            <img src="{{ $file->url }}" alt="{{ $file->name }}"
                                  class="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl">
                             <button @click="lightbox = false"
                                     class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full text-gray-700 font-bold text-sm hover:bg-gray-100 shadow-lg">
@@ -279,7 +279,7 @@
                         {{-- Image uploaded as document: show small thumbnail, click to preview --}}
                         <div class="w-12 h-12 rounded-xl overflow-hidden flex-shrink-0 cursor-zoom-in border border-gray-100"
                              @click="lightbox = true">
-                            <img src="{{ Storage::url($file->path) }}" alt="{{ $file->name }}"
+                            <img src="{{ $file->url }}" alt="{{ $file->name }}"
                                  class="w-full h-full object-cover hover:scale-110 transition-transform duration-300">
                         </div>
 
@@ -287,7 +287,7 @@
                         <div x-show="lightbox" x-cloak @click.self="lightbox = false"
                              class="fixed inset-0 z-50 bg-black/80 flex items-center justify-center p-4">
                             <div class="relative max-w-4xl w-full">
-                                <img src="{{ Storage::url($file->path) }}" alt="{{ $file->name }}"
+                                <img src="{{ $file->url }}" alt="{{ $file->name }}"
                                      class="w-full max-h-[85vh] object-contain rounded-2xl shadow-2xl">
                                 <button @click="lightbox = false"
                                         class="absolute -top-3 -right-3 w-8 h-8 bg-white rounded-full text-gray-700 font-bold text-sm hover:bg-gray-100 shadow-lg">

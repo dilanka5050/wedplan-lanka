@@ -64,6 +64,21 @@ class FileController extends Controller
         return redirect()->back()->with('success', 'File removed from Vault.');
     }
 
+    public function stream(File $file)
+    {
+        $disk = config('filesystems.default');
+        abort_unless(Storage::disk($disk)->exists($file->path), 404);
+
+        $mime = Storage::disk($disk)->mimeType($file->path);
+        return response()->stream(function () use ($disk, $file) {
+            echo Storage::disk($disk)->get($file->path);
+        }, 200, [
+            'Content-Type'        => $mime,
+            'Content-Disposition' => 'inline; filename="' . $file->name . '"',
+            'Cache-Control'       => 'private, max-age=3600',
+        ]);
+    }
+
     public function download(File $file)
     {
         abort_unless(Storage::disk(config('filesystems.default'))->exists($file->path), 404);
