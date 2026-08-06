@@ -128,6 +128,9 @@ body{background:var(--night);font-family:'Cormorant Garamond',serif;color:var(--
 /* ── Hero Video ── */
 #hero-video-wrap{position:relative;width:100%;height:100vh;overflow:hidden;background:var(--night);z-index:1;}
 #hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;}
+@media(max-width:640px){
+  #hero-video{object-fit:contain;}
+}
 #hero-video-wrap::before,#hero-video-wrap::after{
   content:'';position:absolute;left:0;right:0;height:6vh;
   background:var(--night);z-index:2;pointer-events:none;transition:height 1.5s ease;

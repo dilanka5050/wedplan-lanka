@@ -125,6 +125,9 @@ body { overflow:auto !important; }
   position:absolute;inset:0;width:100%;height:100%;
   object-fit:cover;object-position:center;
 }
+@media(max-width:640px){
+  #hero-video{object-fit:contain;}
+}
 /* Cinematic letterbox bars */
 #hero-video-wrap::before,#hero-video-wrap::after{
   content:'';position:absolute;left:0;right:0;height:6vh;
