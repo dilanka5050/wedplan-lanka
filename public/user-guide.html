@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WedPlan Lanka — User Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Inter', sans-serif; color: #1f2937; background: #fff; font-size: 13px; line-height: 1.6; }
+  .playfair { font-family: 'Playfair Display', serif; }
+
+  /* ── PAGE BREAKS ── */
+  .page { page-break-after: always; min-height: 100vh; padding: 48px 56px; position: relative; }
+  .page:last-child { page-break-after: avoid; }
+
+  /* ── COVER ── */
+  .cover { background: linear-gradient(135deg, #db2777 0%, #9333ea 60%, #6366f1 100%); color: #fff; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; }
+  .cover-logo { font-size: 64px; margin-bottom: 24px; }
+  .cover-title { font-family: 'Playfair Display', serif; font-size: 52px; font-weight: 900; line-height: 1.1; margin-bottom: 16px; }
+  .cover-sub { font-size: 20px; opacity: 0.85; margin-bottom: 40px; }
+  .cover-badge { display: inline-block; background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); border-radius: 999px; padding: 8px 24px; font-size: 13px; font-weight: 600; margin-bottom: 16px; }
+  .cover-meta { margin-top: 48px; opacity: 0.6; font-size: 12px; }
+  .cover-divider { width: 80px; height: 3px; background: rgba(255,255,255,0.4); border-radius: 2px; margin: 24px auto; }
+
+  /* ── TABLE OF CONTENTS ── */
+  .toc-title { font-family: 'Playfair Display', serif; font-size: 32px; font-weight: 700; color: #111827; margin-bottom: 32px; padding-bottom: 12px; border-bottom: 2px solid #fce7f3; }
+  .toc-section { margin-bottom: 6px; }
+  .toc-item { display: flex; align-items: baseline; justify-content: space-between; padding: 7px 0; border-bottom: 1px dotted #e5e7eb; }
+  .toc-item:last-child { border-bottom: none; }
+  .toc-num { font-size: 11px; font-weight: 700; color: #db2777; background: #fce7f3; border-radius: 999px; padding: 2px 8px; margin-right: 10px; flex-shrink: 0; }
+  .toc-label { font-size: 13px; font-weight: 500; color: #374151; flex: 1; }
+  .toc-page { font-size: 11px; color: #9ca3af; font-weight: 600; }
+  .toc-group { font-size: 10px; font-weight: 700; color: #9ca3af; text-transform: uppercase; letter-spacing: 0.1em; margin: 20px 0 8px; }
+
+  /* ── SECTION PAGES ── */
+  .page-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid #fce7f3; }
+  .page-icon { width: 48px; height: 48px; background: linear-gradient(135deg, #db2777, #9333ea); border-radius: 14px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+  .page-title { font-family: 'Playfair Display', serif; font-size: 26px; font-weight: 700; color: #111827; }
+  .page-subtitle { font-size: 12px; color: #6b7280; margin-top: 2px; }
+  .section-num { font-size: 11px; font-weight: 700; color: #db2777; background: #fce7f3; border-radius: 999px; padding: 3px 10px; margin-left: auto; flex-shrink: 0; }
+
+  /* ── CONTENT BLOCKS ── */
+  .intro-box { background: linear-gradient(135deg, #fff0f6, #f5f3ff); border: 1px solid #f9a8d4; border-radius: 14px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px; color: #374151; line-height: 1.7; }
+  .intro-box strong { color: #db2777; }
+
+  h3 { font-size: 14px; font-weight: 700; color: #111827; margin: 20px 0 10px; }
+  h4 { font-size: 13px; font-weight: 600; color: #374151; margin: 14px 0 6px; }
+
+  .step { display: flex; gap: 14px; margin-bottom: 14px; align-items: flex-start; }
+  .step-num { width: 28px; height: 28px; background: linear-gradient(135deg, #db2777, #9333ea); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+  .step-body { flex: 1; }
+  .step-body strong { display: block; font-size: 13px; color: #111827; margin-bottom: 2px; }
+  .step-body p { font-size: 12px; color: #6b7280; line-height: 1.6; }
+
+  .field-table { width: 100%; border-collapse: collapse; margin: 12px 0; }
+  .field-table th { background: #f9fafb; text-align: left; padding: 8px 12px; font-size: 11px; font-weight: 700; color: #6b7280; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #e5e7eb; }
+  .field-table td { padding: 9px 12px; font-size: 12px; border-bottom: 1px solid #f3f4f6; vertical-align: top; }
+  .field-table tr:last-child td { border-bottom: none; }
+  .field-table td:first-child { font-weight: 600; color: #374151; width: 30%; }
+  .field-table td:last-child { color: #6b7280; }
+  .req { color: #ef4444; font-size: 10px; font-weight: 700; }
+
+  .tip-box { display: flex; gap: 10px; background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 10px; padding: 12px 14px; margin: 14px 0; }
+  .tip-box .tip-icon { font-size: 16px; flex-shrink: 0; }
+  .tip-box p { font-size: 12px; color: #1e40af; line-height: 1.6; }
+  .tip-box strong { color: #1d4ed8; }
+
+  .warn-box { display: flex; gap: 10px; background: #fffbeb; border: 1px solid #fde68a; border-radius: 10px; padding: 12px 14px; margin: 14px 0; }
+  .warn-box p { font-size: 12px; color: #92400e; line-height: 1.6; }
+  .warn-box strong { color: #78350f; }
+
+  .pro-box { display: flex; gap: 10px; background: linear-gradient(135deg, #fdf4ff, #fff7ed); border: 1px solid #e9d5ff; border-radius: 10px; padding: 12px 14px; margin: 14px 0; }
+  .pro-box p { font-size: 12px; color: #6b21a8; line-height: 1.6; }
+  .pro-box strong { color: #581c87; }
+
+  .badge-pro { display: inline-block; background: linear-gradient(135deg, #db2777, #9333ea); color: #fff; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 999px; vertical-align: middle; margin-left: 4px; letter-spacing: 0.05em; }
+  .badge-free { display: inline-block; background: #e5e7eb; color: #374151; font-size: 9px; font-weight: 800; padding: 2px 7px; border-radius: 999px; vertical-align: middle; margin-left: 4px; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 14px 0; }
+  .card-block { background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 12px; padding: 14px 16px; }
+  .card-block h4 { margin-top: 0; font-size: 12px; color: #111827; }
+  .card-block ul { padding-left: 16px; margin-top: 6px; }
+  .card-block ul li { font-size: 12px; color: #6b7280; margin-bottom: 3px; }
+
+  ul.checklist { list-style: none; padding: 0; margin: 10px 0; }
+  ul.checklist li { display: flex; align-items: flex-start; gap: 8px; font-size: 12px; color: #374151; margin-bottom: 6px; }
+  ul.checklist li::before { content: "✓"; color: #10b981; font-weight: 800; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── SCREENSHOT PLACEHOLDER ── */
+  .screenshot { width: 100%; background: linear-gradient(135deg, #fdf2f8, #f5f3ff); border: 2px dashed #f9a8d4; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 28px; margin: 16px 0; text-align: center; }
+  .screenshot .ss-icon { font-size: 32px; margin-bottom: 8px; }
+  .screenshot .ss-label { font-size: 12px; font-weight: 600; color: #db2777; }
+  .screenshot .ss-hint { font-size: 11px; color: #9ca3af; margin-top: 4px; }
+  .screenshot-sm { padding: 18px; }
+  .screenshot-sm .ss-icon { font-size: 22px; margin-bottom: 4px; }
+
+  /* ── FOOTER ── */
+  .page-footer { position: absolute; bottom: 24px; left: 56px; right: 56px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f3f4f6; padding-top: 10px; }
+  .page-footer span { font-size: 10px; color: #d1d5db; }
+  .page-footer .pf-brand { font-weight: 700; color: #f9a8d4; }
+
+  /* ── PRINT ── */
+  @media print {
+    body { font-size: 12px; }
+    .page { padding: 36px 44px; }
+    .cover-title { font-size: 44px; }
+    a { color: inherit; text-decoration: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     COVER PAGE
+════════════════════════════════════════════════ -->
+<div class="page cover">
+  <div class="cover-logo">💍</div>
+  <div class="cover-badge">🇱🇰 &nbsp; Built for Sri Lankan Couples</div>
+  <h1 class="cover-title playfair">WedPlan Lanka</h1>
+  <p class="cover-sub">Complete User Guide</p>
+  <div class="cover-divider"></div>
+  <p style="opacity:0.75; font-size:14px; max-width:420px; line-height:1.8;">
+    Everything you need to know to plan your perfect Sri Lankan wedding —
+    from registration to your big day.
+  </p>
+  <div class="cover-meta">
+    <p>Version 1.0 &nbsp;·&nbsp; WedPlan Lanka &nbsp;·&nbsp; wedplanlanka.com</p>
+    <p style="margin-top:6px;">Supports Sinhala · Tamil · Muslim · Christian Weddings</p>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     TABLE OF CONTENTS
+════════════════════════════════════════════════ -->
+<div class="page">
+  <h2 class="toc-title playfair">Table of Contents</h2>
+
+  <p class="toc-group">Getting Started</p>
+  <div class="toc-item"><span class="toc-num">01</span><span class="toc-label">Welcome Page &amp; Features Overview</span><span class="toc-page">3</span></div>
+  <div class="toc-item"><span class="toc-num">02</span><span class="toc-label">Creating Your Account (Register)</span><span class="toc-page">4</span></div>
+  <div class="toc-item"><span class="toc-num">03</span><span class="toc-label">Signing In (Login)</span><span class="toc-page">5</span></div>
+  <div class="toc-item"><span class="toc-num">04</span><span class="toc-label">Setting Up Your Wedding Workspace</span><span class="toc-page">6</span></div>
+
+  <p class="toc-group">Core Features (Free &amp; Pro)</p>
+  <div class="toc-item"><span class="toc-num">05</span><span class="toc-label">Dashboard</span><span class="toc-page">7</span></div>
+  <div class="toc-item"><span class="toc-num">06</span><span class="toc-label">Wedding Checklist</span><span class="toc-page">8</span></div>
+  <div class="toc-item"><span class="toc-num">07</span><span class="toc-label">Budget Tracker</span><span class="toc-page">9</span></div>
+  <div class="toc-item"><span class="toc-num">08</span><span class="toc-label">Guest Management</span><span class="toc-page">10</span></div>
+  <div class="toc-item"><span class="toc-num">09</span><span class="toc-label">Wedding Vault (File Storage)</span><span class="toc-page">11</span></div>
+  <div class="toc-item"><span class="toc-num">10</span><span class="toc-label">Wedding Notes</span><span class="toc-page">12</span></div>
+
+  <p class="toc-group">Pro Features</p>
+  <div class="toc-item"><span class="toc-num">11</span><span class="toc-label">Wedding Agenda (Timeline)</span><span class="toc-page">13</span></div>
+  <div class="toc-item"><span class="toc-num">12</span><span class="toc-label">Wedding Invitation Cards</span><span class="toc-page">14</span></div>
+  <div class="toc-item"><span class="toc-num">13</span><span class="toc-label">Seating Plan</span><span class="toc-page">15</span></div>
+
+  <p class="toc-group">Account &amp; Settings</p>
+  <div class="toc-item"><span class="toc-num">14</span><span class="toc-label">My Profile</span><span class="toc-page">16</span></div>
+  <div class="toc-item"><span class="toc-num">15</span><span class="toc-label">Wedding Settings</span><span class="toc-page">17</span></div>
+  <div class="toc-item"><span class="toc-num">16</span><span class="toc-label">Upgrading to Pro</span><span class="toc-page">18</span></div>
+  <div class="toc-item"><span class="toc-num">17</span><span class="toc-label">Free vs Pro Plan Comparison</span><span class="toc-page">19</span></div>
+
+  <div class="page-footer">
+    <span class="pf-brand">WedPlan Lanka</span>
+    <span>User Guide · Table of Contents</span>
+    <span>Page 2</span>
+  </div>
+</div>
+
+<!-- PAGE 3 — WELCOME -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">🏠</div>
+    <div><div class="page-title playfair">Welcome Page</div><div class="page-subtitle">Your first look at WedPlan Lanka</div></div>
+    <span class="section-num">01</span>
+  </div>
+  <div class="intro-box">The <strong>Welcome Page</strong> is the public homepage. It gives an overview of all features, pricing plans, and lets you register or log in. No account is needed to view it.</div>
+  <div class="screenshot" style="height:150px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Welcome Page — Hero Section</div><div class="ss-hint">Paste a full-page screenshot here</div></div>
+  <h3>What You'll Find</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>🧭 Navigation Bar</h4><ul><li>Links to Features, Pricing, FAQ</li><li>Login button for existing users</li><li>"Get Started Free" to register</li></ul></div>
+    <div class="card-block"><h4>✨ Hero Section</h4><ul><li>Main headline and app description</li><li>"Start Planning Free" call-to-action</li><li>Live dashboard preview card</li></ul></div>
+    <div class="card-block"><h4>🎯 Features Section</h4><ul><li>Smart Checklist, Budget Tracker, Guest Manager</li><li>Wedding Agenda, File Vault, Dashboard</li><li>Notes, Wedding Cards, Seating Plan</li></ul></div>
+    <div class="card-block"><h4>💰 Pricing Section</h4><ul><li>Free Plan details and limits</li><li>Pro Plan price (loaded from database)</li><li>"Upgrade to Pro" opens WhatsApp modal</li></ul></div>
+  </div>
+  <h3>Supported Wedding Traditions</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>🪔 Sinhala</h4><p style="font-size:12px;color:#6b7280;">Poruwa Ceremony — pre-built checklist included</p></div>
+    <div class="card-block"><h4>🌺 Tamil</h4><p style="font-size:12px;color:#6b7280;">Thali Ceremony — pre-built checklist included</p></div>
+    <div class="card-block"><h4>☪️ Muslim</h4><p style="font-size:12px;color:#6b7280;">Nikah Ceremony — pre-built checklist included</p></div>
+    <div class="card-block"><h4>✝️ Christian</h4><p style="font-size:12px;color:#6b7280;">Church Wedding — pre-built checklist included</p></div>
+  </div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>If you are already logged in, visiting the welcome page will automatically redirect you to your <strong>Dashboard</strong>.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 01 — Welcome Page</span><span>Page 3</span></div>
+</div>
+
+<!-- PAGE 4 — REGISTER -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">✍️</div>
+    <div><div class="page-title playfair">Creating Your Account</div><div class="page-subtitle">Register for free — no credit card required</div></div>
+    <span class="section-num">02</span>
+  </div>
+  <div class="intro-box">To start planning, create a free WedPlan Lanka account. Registration takes less than a minute. Click <strong>"Get Started Free"</strong> from the welcome page or <strong>"Create one free"</strong> from the login page.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Register Page</div><div class="ss-hint">Paste a screenshot of the registration form here</div></div>
+  <h3>Registration Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Full Name <span class="req">*</span></td><td>Your full name — e.g. Sanduni Perera</td></tr>
+      <tr><td>Email Address <span class="req">*</span></td><td>A valid email address. Used to log in.</td></tr>
+      <tr><td>Phone Number <span class="req">*</span></td><td>Your mobile number — e.g. +94 77 123 4567</td></tr>
+      <tr><td>Password <span class="req">*</span></td><td>Choose a strong password (minimum 8 characters)</td></tr>
+      <tr><td>Confirm Password <span class="req">*</span></td><td>Re-enter your password to confirm it matches</td></tr>
+    </tbody>
+  </table>
+  <h3>Steps to Register</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Go to the Welcome Page</strong><p>Click "Get Started Free" in the navigation bar or the hero section.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Fill in the Registration Form</strong><p>Enter your full name, email, phone number, and a secure password.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Create My Account"</strong><p>If there are errors (e.g. email already taken), they appear in red below the field.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-body"><strong>You're in!</strong><p>You are automatically logged in and redirected to set up your wedding workspace.</p></div></div>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p><strong>Email must be unique.</strong> If you see "The email has already been taken", use a different email or log in to your existing account.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 02 — Register</span><span>Page 4</span></div>
+</div>
+
+<!-- PAGE 5 — LOGIN -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">🔐</div>
+    <div><div class="page-title playfair">Signing In</div><div class="page-subtitle">Access your wedding workspace</div></div>
+    <span class="section-num">03</span>
+  </div>
+  <div class="intro-box">Use the <strong>Login page</strong> to sign in to your existing account. You'll need the email address and password you used when registering.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Login Page</div><div class="ss-hint">Paste a screenshot of the login form here</div></div>
+  <h3>Login Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Email Address <span class="req">*</span></td><td>The email you registered with</td></tr>
+      <tr><td>Password <span class="req">*</span></td><td>Your account password</td></tr>
+      <tr><td>Remember Me</td><td>Tick this to stay logged in on this device</td></tr>
+    </tbody>
+  </table>
+  <h3>Steps to Log In</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Go to the Login Page</strong><p>Click "Login" in the navigation bar on the welcome page.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Enter Your Credentials</strong><p>Type your registered email address and password.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Sign In"</strong><p>You will be redirected to your Dashboard (or Wedding Setup if not yet configured).</p></div></div>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p><strong>Forgot your password?</strong> WedPlan Lanka does not have self-service password reset. Contact support via the phone number shown on the login page and they will reset it for you.</p></div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p><strong>Don't have an account yet?</strong> Click "Create one free" at the bottom of the login form to go to the Registration page.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 03 — Login</span><span>Page 5</span></div>
+</div>
+
+<!-- PAGE 6 — WEDDING SETUP -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">💒</div>
+    <div><div class="page-title playfair">Wedding Workspace Setup</div><div class="page-subtitle">Tell us about your special day</div></div>
+    <span class="section-num">04</span>
+  </div>
+  <div class="intro-box">After registering, you will be prompted to <strong>set up your wedding workspace</strong>. This is a one-time setup that creates your personal planning space. All details can be updated later from <strong>Settings</strong>.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Setup Page</div><div class="ss-hint">Paste a screenshot of the wedding setup form here</div></div>
+  <h3>Setup Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Bride's Name <span class="req">*</span></td><td>First and last name of the bride</td></tr>
+      <tr><td>Groom's Name <span class="req">*</span></td><td>First and last name of the groom</td></tr>
+      <tr><td>Wedding Type <span class="req">*</span></td><td>Choose from: Sinhala, Tamil, Muslim, or Christian. Loads a pre-built checklist tailored to your tradition.</td></tr>
+      <tr><td>Wedding Date</td><td>Optional at setup — adds the countdown timer to your dashboard. Can be set later.</td></tr>
+      <tr><td>Venue</td><td>Optional — the name and location of your wedding venue</td></tr>
+    </tbody>
+  </table>
+  <h3>Steps to Set Up</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Enter Bride &amp; Groom Names</strong><p>These appear throughout your workspace and on your dashboard.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Select Your Wedding Type</strong><p>This determines which pre-built checklist tasks are loaded for you automatically.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Add Date &amp; Venue (Optional)</strong><p>You can skip these now and add them later in Settings. Adding a date activates the countdown timer.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Click "Create Wedding Workspace"</strong><p>Your workspace is created and you are taken to your Dashboard.</p></div></div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p><strong>Changing your wedding type later</strong> (in Settings) will prompt you to either replace only the default checklist tasks or clear your entire checklist and start fresh.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 04 — Wedding Setup</span><span>Page 6</span></div>
+</div>
+
+<!-- PAGE 7 — DASHBOARD -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">📊</div>
+    <div><div class="page-title playfair">Dashboard</div><div class="page-subtitle">Your wedding at a glance</div></div>
+    <span class="section-num">05</span>
+  </div>
+  <div class="intro-box">The <strong>Dashboard</strong> is your central hub. It shows your wedding countdown, planning progress, upcoming tasks, budget summary, and quick action links — all in one place.</div>
+  <div class="screenshot" style="height:150px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Dashboard</div><div class="ss-hint">Paste a screenshot of the full dashboard here</div></div>
+  <h3>Dashboard Sections</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>⏳ Wedding Countdown Banner</h4><ul><li>Days, weeks, and months until your wedding</li><li>Bride &amp; Groom names, date, venue, wedding type</li><li>Overall planning progress bar</li></ul></div>
+    <div class="card-block"><h4>📌 Stats Cards (4 cards)</h4><ul><li><strong>Tasks</strong> — % of checklist completed</li><li><strong>Budget</strong> — spent vs estimated in LKR</li><li><strong>Guests</strong> — total invited, accepted, declined</li><li><strong>Date</strong> — your wedding date</li></ul></div>
+    <div class="card-block"><h4>✅ Upcoming Tasks</h4><ul><li>Shows your next pending tasks</li><li>Colour-coded by priority (Urgent/High/Medium/Low)</li><li>Due dates highlighted in red if overdue</li></ul></div>
+    <div class="card-block"><h4>💰 Budget Summary</h4><ul><li>Estimated total, actual spent, remaining balance</li><li>Remaining shown in green (under) or red (over)</li><li>Quick link to Budget Tracker</li></ul></div>
+  </div>
+  <h3>Onboarding Checklist (New Users)</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">If you haven't started planning yet, the dashboard shows a 3-step getting started guide:</p>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Set your wedding date</strong><p>Activates the countdown timer on the dashboard.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Add your first guest</strong><p>Start building your guest list.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Set your wedding budget</strong><p>Add your first budget item to start tracking spending.</p></div></div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>The <strong>Quick Actions</strong> grid at the bottom right gives you one-click access to Checklist, Guests, Budget, Vault, Notes, and Settings.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 05 — Dashboard</span><span>Page 7</span></div>
+</div>
+
+<!-- PAGE 8 — CHECKLIST -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">✅</div>
+    <div><div class="page-title playfair">Wedding Checklist</div><div class="page-subtitle">Track every task for your big day</div></div>
+    <span class="section-num">06</span>
+  </div>
+  <div class="intro-box">The <strong>Checklist</strong> helps you track every task needed for your wedding. Tasks are grouped by category and come pre-loaded based on your wedding type. You can add, complete, prioritise, and delete tasks at any time.</div>
+  <div class="screenshot" style="height:140px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Checklist Page</div><div class="ss-hint">Paste a screenshot of the checklist here</div></div>
+  <h3>Adding a Task</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Task"</strong><p>The add task form expands below the header.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Fill in the task details</strong><p>Enter a title, select a category, set priority and an optional due date.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Add Task"</strong><p>The task appears in the list under its category.</p></div></div>
+  <h3>Task Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Task Title <span class="req">*</span></td><td>A short description — e.g. "Book Poruwa decorator"</td></tr>
+      <tr><td>Category</td><td>Group the task — Venue, Photography, Catering, etc.</td></tr>
+      <tr><td>Priority</td><td>Low 🟢, Medium 🟡, High 🟠, or Urgent 🔴</td></tr>
+      <tr><td>Due Date</td><td>Optional deadline for the task</td></tr>
+    </tbody>
+  </table>
+  <h3>Managing Tasks</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>☑️ Mark Complete</h4><p style="font-size:12px;color:#6b7280;">Click the checkbox on the left of any task to toggle it between Pending and Completed. Completed tasks show with a strikethrough.</p></div>
+    <div class="card-block"><h4>🎯 Change Priority</h4><p style="font-size:12px;color:#6b7280;">Click the coloured priority badge on any task to open a dropdown. Select a new priority and click the green tick to save.</p></div>
+    <div class="card-block"><h4>🗑️ Delete a Task</h4><p style="font-size:12px;color:#6b7280;">Click the ✕ button on the right of any task. A confirmation prompt will appear before deletion.</p></div>
+    <div class="card-block"><h4>📊 Progress Bar</h4><p style="font-size:12px;color:#6b7280;">The progress bar at the top shows how many tasks are completed out of the total. This also feeds into your Dashboard progress.</p></div>
+  </div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>Tasks are <strong>grouped by category</strong> automatically. The category header shows how many tasks are completed in that group — e.g. "Venue (2/5)".</p></div>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p><strong>Free plan limit:</strong> Up to 20 tasks. Upgrade to Pro for unlimited tasks.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 06 — Checklist</span><span>Page 8</span></div>
+</div>
+
+<!-- PAGE 9 — BUDGET -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">💰</div>
+    <div><div class="page-title playfair">Budget Tracker</div><div class="page-subtitle">Track every rupee of your wedding spend</div></div>
+    <span class="section-num">07</span>
+  </div>
+  <div class="intro-box">The <strong>Budget Tracker</strong> lets you record estimated and actual costs for every wedding expense in LKR. See at a glance how much you've spent, how much is remaining, and where you're over or under budget.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Budget Tracker Page</div><div class="ss-hint">Paste a screenshot of the budget tracker here</div></div>
+  <h3>Summary Cards</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>📋 Estimated Total</h4><p style="font-size:12px;color:#6b7280;">The sum of all estimated costs across your budget items.</p></div>
+    <div class="card-block"><h4>💸 Actual Spent</h4><p style="font-size:12px;color:#6b7280;">The sum of all actual costs you have recorded so far.</p></div>
+    <div class="card-block"><h4>✅ Remaining (green)</h4><p style="font-size:12px;color:#6b7280;">Estimated minus actual. Shown in green when under budget.</p></div>
+    <div class="card-block"><h4>⚠️ Over Budget (red)</h4><p style="font-size:12px;color:#6b7280;">If actual exceeds estimated, remaining turns red with "(over)" label.</p></div>
+  </div>
+  <h3>Adding a Budget Item</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Item"</strong><p>The add form expands. (Button is hidden if you've reached the free plan limit.)</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Fill in the details</strong><p>Enter item name, category, estimated cost. Actual cost is optional — fill it in later once paid.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Add Item"</strong><p>The item appears in the table below.</p></div></div>
+  <h3>Budget Item Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Item Name <span class="req">*</span></td><td>e.g. "Venue Booking", "Photographer"</td></tr>
+      <tr><td>Category</td><td>e.g. Venue, Catering, Photography, Decorations</td></tr>
+      <tr><td>Estimated Cost <span class="req">*</span></td><td>Your expected cost in LKR</td></tr>
+      <tr><td>Actual Cost</td><td>What you actually paid. Leave blank until payment is made.</td></tr>
+      <tr><td>Notes</td><td>Optional — e.g. "Deposit paid, balance due 2 weeks before"</td></tr>
+    </tbody>
+  </table>
+  <h3>Editing a Budget Item</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:8px;">Click the <strong>✏️ edit icon</strong> on any row to expand an inline edit form. Update estimated cost, actual cost, or notes, then click <strong>Save</strong>.</p>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p><strong>Free plan limit:</strong> Up to 5 budget items. Upgrade to Pro for unlimited items.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 07 — Budget Tracker</span><span>Page 9</span></div>
+</div>
+
+<!-- PAGE 10 — GUESTS -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">👥</div>
+    <div><div class="page-title playfair">Guest Management</div><div class="page-subtitle">Manage your full guest list and RSVPs</div></div>
+    <span class="section-num">08</span>
+  </div>
+  <div class="intro-box">The <strong>Guest Management</strong> page lets you add guests, track RSVPs, organise by Bride/Groom side, and see a full breakdown of who is attending your wedding.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Guest Management Page</div><div class="ss-hint">Paste a screenshot of the guest page here</div></div>
+  <h3>Stats Cards</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>💌 Invitations Sent</h4><p style="font-size:12px;color:#6b7280;">Total number of invitation entries added.</p></div>
+    <div class="card-block"><h4>👥 Total People Invited</h4><p style="font-size:12px;color:#6b7280;">Sum of all people across all invitations (singles, couples, families).</p></div>
+    <div class="card-block"><h4>✅ Confirmed Attending</h4><p style="font-size:12px;color:#6b7280;">Total headcount of guests who have accepted.</p></div>
+    <div class="card-block"><h4>⏳ Awaiting Response</h4><p style="font-size:12px;color:#6b7280;">Guests still with a Pending RSVP status.</p></div>
+  </div>
+  <h3>Adding a Guest</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Guest"</strong><p>The add guest form expands below the header.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Fill in the invitation details</strong><p>Enter the invitation name, select Bride or Groom side, choose invitation type, and set the total number of people.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Add Guest"</strong><p>The guest appears in the list.</p></div></div>
+  <h3>Guest Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Invitation Name <span class="req">*</span></td><td>e.g. "Perera Family" or "Mr. &amp; Mrs. Silva"</td></tr>
+      <tr><td>Guest Side <span class="req">*</span></td><td>Bride Side or Groom Side</td></tr>
+      <tr><td>Invitation Type <span class="req">*</span></td><td>Single (1 person), Couple (2), or Family (4+)</td></tr>
+      <tr><td>Total People <span class="req">*</span></td><td>Exact headcount for this invitation (1–20)</td></tr>
+      <tr><td>Phone</td><td>Optional contact number</td></tr>
+      <tr><td>Email</td><td>Optional email address</td></tr>
+      <tr><td>Notes</td><td>e.g. "Vegetarian", "needs wheelchair access"</td></tr>
+    </tbody>
+  </table>
+  <div class="pro-box"><div class="tip-icon">⭐</div><p><strong>Pro Feature:</strong> Separate Bride's List and Groom's List tabs, plus CSV bulk import, export, and print. Free users see all guests in a single list with up to 30 guests total.</p></div>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p><strong>Free plan limit:</strong> Up to 30 guests. Upgrade to Pro for unlimited guests.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 08 — Guest Management</span><span>Page 10</span></div>
+</div>
+
+<!-- PAGE 11 — VAULT -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">📁</div>
+    <div><div class="page-title playfair">Wedding Vault</div><div class="page-subtitle">Store inspiration images, contracts &amp; documents</div></div>
+    <span class="section-num">09</span>
+  </div>
+  <div class="intro-box">The <strong>Wedding Vault</strong> is your secure file storage. Upload inspiration photos, vendor contracts, booking confirmations, and any other documents you need to keep organised in one place.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Vault Page</div><div class="ss-hint">Paste a screenshot of the vault page here</div></div>
+  <h3>Two Storage Tabs</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>🖼️ Inspiration Board</h4><p style="font-size:12px;color:#6b7280;">Displays uploaded images in a masonry grid. Click any image to open a full-screen lightbox preview. Perfect for venue photos, decoration ideas, and dress inspiration.</p></div>
+    <div class="card-block"><h4>📄 Documents</h4><p style="font-size:12px;color:#6b7280;">Lists uploaded PDFs, Word documents, and spreadsheets in a table view. Shows file name, type, size, and upload date. Download or remove files from here.</p></div>
+  </div>
+  <h3>Uploading a File</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Select Upload Type</strong><p>Click "Inspiration" or "Document" toggle to choose which tab the file will appear in.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Drop or Click to Upload</strong><p>Drag and drop a file onto the upload zone, or click it to open the file browser.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>File Uploads Automatically</strong><p>The form submits immediately after you select a file. No extra button needed.</p></div></div>
+  <h3>Supported File Types &amp; Limits</h3>
+  <table class="field-table">
+    <thead><tr><th>Type</th><th>Formats</th><th>Max Size</th></tr></thead>
+    <tbody>
+      <tr><td>Images</td><td>JPG, PNG, GIF, WebP</td><td>10 MB per file</td></tr>
+      <tr><td>Documents</td><td>PDF, DOC, DOCX, XLS, XLSX</td><td>10 MB per file</td></tr>
+    </tbody>
+  </table>
+  <h3>Storage Quota</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:8px;">A progress bar at the top right shows how many upload slots you have used. When the bar turns red, you have reached your limit.</p>
+  <div class="two-col">
+    <div class="card-block"><h4>🆓 Free Plan</h4><p style="font-size:12px;color:#6b7280;">5 file upload slots total</p></div>
+    <div class="card-block"><h4>⭐ Pro Plan</h4><p style="font-size:12px;color:#6b7280;">100 file upload slots (can be increased by admin)</p></div>
+  </div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>If your vault has been <strong>archived</strong> by the admin, uploads are disabled and a banner will explain the reason. Contact your wedding planner via WhatsApp to restore access.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 09 — Wedding Vault</span><span>Page 11</span></div>
+</div>
+
+<!-- PAGE 12 — NOTES -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">📝</div>
+    <div><div class="page-title playfair">Wedding Notes</div><div class="page-subtitle">Jot down ideas, contacts &amp; reminders</div></div>
+    <span class="section-num">10</span>
+  </div>
+  <div class="intro-box">The <strong>Notes</strong> page is your free-form notepad. Use it to save vendor contact details, ideas, reminders, or anything else you need to remember during your wedding planning journey.</div>
+  <div class="screenshot" style="height:130px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Notes Page</div><div class="ss-hint">Paste a screenshot of the notes page here</div></div>
+  <h3>Adding a Note</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Note"</strong><p>The add note form expands below the header.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Enter a Title and Content</strong><p>Title is required (max 255 characters). Content is optional (max 5,000 characters).</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Save Note"</strong><p>The note appears as a card in the grid below.</p></div></div>
+  <h3>Note Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Title <span class="req">*</span></td><td>A short heading for the note — e.g. "Photographer contact", "Venue deposit reminder"</td></tr>
+      <tr><td>Content</td><td>The full note body. Supports multi-line text. Max 5,000 characters.</td></tr>
+    </tbody>
+  </table>
+  <h3>Managing Notes</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>✏️ Edit a Note</h4><p style="font-size:12px;color:#6b7280;">Click the pencil icon on any note card. The card switches to edit mode inline — update the title or content and click Save.</p></div>
+    <div class="card-block"><h4>🗑️ Delete a Note</h4><p style="font-size:12px;color:#6b7280;">Click the ✕ icon on any note card. A confirmation prompt appears before the note is permanently deleted.</p></div>
+  </div>
+  <h3>Notes Layout</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:8px;">Notes are displayed in a responsive grid — 1 column on mobile, 2 columns on tablet, 3 columns on desktop. Each card shows the title, content, and a "last updated" timestamp at the bottom.</p>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>Notes are a <strong>free feature</strong> — available on both Free and Pro plans with no limits on the number of notes you can create.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 10 — Wedding Notes</span><span>Page 12</span></div>
+</div>
+
+<!-- PAGE 13 — AGENDA -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">📅</div>
+    <div><div class="page-title playfair">Wedding Agenda</div><div class="page-subtitle">Plan your ceremony schedule with Nekath time support <span class="badge-pro">PRO</span></div></div>
+    <span class="section-num">11</span>
+  </div>
+  <div class="intro-box">The <strong>Wedding Agenda</strong> (Timeline) lets you plan your full ceremony schedule event by event. It supports <strong>Nekath time</strong> — the auspicious moment for key ceremonies — making it ideal for Sinhala and Tamil weddings.</div>
+  <div class="pro-box"><div class="tip-icon">⭐</div><p><strong>Pro Feature.</strong> The Agenda is only available on the Pro plan. Free users will see a locked placeholder in the sidebar.</p></div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Agenda Page</div><div class="ss-hint">Paste a screenshot of the agenda/timeline page here</div></div>
+  <h3>Adding an Event</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Event"</strong><p>The add event form expands below the header.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Fill in the event details</strong><p>Enter a title, start time, end time, optional Nekath time, and a description.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Add Event"</strong><p>The event appears on the timeline, ordered by start time.</p></div></div>
+  <h3>Event Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Event Title <span class="req">*</span></td><td>e.g. "Poruwa Ceremony", "Reception Dinner", "Cake Cutting"</td></tr>
+      <tr><td>Start Time</td><td>When the event begins — e.g. 09:00 AM</td></tr>
+      <tr><td>End Time</td><td>When the event ends — e.g. 10:30 AM</td></tr>
+      <tr><td>Nekath Time</td><td>The auspicious time for the ceremony. Displayed highlighted in amber on the timeline.</td></tr>
+      <tr><td>Description</td><td>Optional notes about the event</td></tr>
+    </tbody>
+  </table>
+  <h3>Managing Events</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>✏️ Edit an Event</h4><p style="font-size:12px;color:#6b7280;">Click the pencil icon on any event card. An inline edit form appears. Update the details and click "Save Changes".</p></div>
+    <div class="card-block"><h4>🗑️ Delete an Event</h4><p style="font-size:12px;color:#6b7280;">Click the ✕ icon on any event card. Confirm the deletion in the prompt that appears.</p></div>
+  </div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>Events are automatically <strong>ordered by Start Time</strong>. The Nekath time is shown in a highlighted amber badge below the start/end times on the timeline.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 11 — Wedding Agenda</span><span>Page 13</span></div>
+</div>
+
+<!-- PAGE 14 — INVITATIONS -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">💌</div>
+    <div><div class="page-title playfair">Wedding Invitation Cards</div><div class="page-subtitle">Auto-generate beautiful digital invitations <span class="badge-pro">PRO</span></div></div>
+    <span class="section-num">12</span>
+  </div>
+  <div class="intro-box">The <strong>Invitation</strong> page lets you generate a professional digital wedding invitation card. Fill in your details, choose a template, and your card is generated instantly — ready to print or save as PDF.</div>
+  <div class="pro-box"><div class="tip-icon">⭐</div><p><strong>Pro Feature.</strong> Wedding invitation generation is only available on the Pro plan.</p></div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Invitation Page</div><div class="ss-hint">Paste a screenshot of the invitation builder here</div></div>
+  <h3>Invitation Form Fields</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Bride's First Name <span class="req">*</span></td><td>e.g. Sanduni</td></tr>
+      <tr><td>Groom's First Name <span class="req">*</span></td><td>e.g. Nilanka</td></tr>
+      <tr><td>Bride's Family Name <span class="req">*</span></td><td>Used as "Daughter of Mr. &amp; Mrs. ..."</td></tr>
+      <tr><td>Groom's Family Name <span class="req">*</span></td><td>Used as "Son of Mr. &amp; Mrs. ..."</td></tr>
+      <tr><td>Wedding Day <span class="req">*</span></td><td>e.g. Sunday 11th March 2026</td></tr>
+      <tr><td>Wedding Location <span class="req">*</span></td><td>e.g. The Grand Royal Hotel, Kurunegala</td></tr>
+      <tr><td>From / To <span class="req">*</span></td><td>Event duration — e.g. 09.00 A.M to 04.00 PM</td></tr>
+      <tr><td>Poruwa Ceremony Time <span class="req">*</span></td><td>The auspicious ceremony time — e.g. 09.18 A.M</td></tr>
+      <tr><td>Template <span class="req">*</span></td><td>Choose from available designs for your wedding type</td></tr>
+    </tbody>
+  </table>
+  <h3>Generating Your Invitation</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Fill in all required fields</strong><p>Enter names, date, location, times, and select a template.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Click "Save &amp; Preview Invitation"</strong><p>The live preview on the right updates to show your real invitation card.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Open Full Preview"</strong><p>Opens the full-size invitation in a new tab. Use your browser's Print function (Ctrl+P) to save as PDF.</p></div></div>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>You can switch between templates using the tabs in the preview panel on the right. Save again to apply a different template to your invitation.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 12 — Invitation Cards</span><span>Page 14</span></div>
+</div>
+
+<!-- PAGE 15 — SEATING -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">🪑</div>
+    <div><div class="page-title playfair">Seating Plan</div><div class="page-subtitle">Arrange tables and assign guests to seats <span class="badge-pro">PRO</span></div></div>
+    <span class="section-num">13</span>
+  </div>
+  <div class="intro-box">The <strong>Seating Plan</strong> lets you create tables, set their capacity, and assign guests to specific seats. See at a glance which guests are seated and who still needs a table.</div>
+  <div class="pro-box"><div class="tip-icon">⭐</div><p><strong>Pro Feature.</strong> The Seating Plan is only available on the Pro plan.</p></div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Seating Plan Page</div><div class="ss-hint">Paste a screenshot of the seating plan here</div></div>
+  <h3>Stats Overview</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>🪑 Total Seats</h4><p style="font-size:12px;color:#6b7280;">Combined capacity of all tables.</p></div>
+    <div class="card-block"><h4>✅ Guests Seated</h4><p style="font-size:12px;color:#6b7280;">Number of guests who have been assigned to a table.</p></div>
+    <div class="card-block"><h4>🍽️ Tables</h4><p style="font-size:12px;color:#6b7280;">Total number of tables created.</p></div>
+    <div class="card-block"><h4>⏳ Unassigned Guests</h4><p style="font-size:12px;color:#6b7280;">Guests not yet assigned to any table.</p></div>
+  </div>
+  <h3>Creating a Table</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "+ Add Table"</strong><p>The add table form expands.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Enter Table Name and Capacity</strong><p>e.g. "Table 1" or "Bride's Table", with a seat count of 8.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Add Table"</strong><p>The table card appears on the left panel.</p></div></div>
+  <h3>Assigning Guests to a Table</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Find the table card</strong><p>Each table card shows current occupancy and a progress bar (green = space available, red = full).</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Use the dropdown at the bottom of the card</strong><p>Select a guest from the "Assign a guest..." dropdown. Only unassigned guests appear here.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Assign"</strong><p>The guest moves from the Unassigned panel on the right into the table card.</p></div></div>
+  <h3>Other Actions</h3>
+  <table class="field-table">
+    <thead><tr><th>Action</th><th>How to do it</th></tr></thead>
+    <tbody>
+      <tr><td>Edit table capacity</td><td>Click the ✏️ pencil next to the seat count on the table header. Enter new capacity and click ✓.</td></tr>
+      <tr><td>Remove a guest from a table</td><td>Click the ✕ next to the guest's name inside the table card.</td></tr>
+      <tr><td>Delete a table</td><td>Click the ✕ button in the top-right of the table card. All assigned guests return to Unassigned.</td></tr>
+    </tbody>
+  </table>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>The <strong>Unassigned Guests</strong> panel on the right shows all guests not yet seated. Use it as a checklist to ensure everyone has a seat before your wedding day.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 13 — Seating Plan</span><span>Page 15</span></div>
+</div>
+
+<!-- PAGE 16 — PROFILE -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">👤</div>
+    <div><div class="page-title playfair">My Profile</div><div class="page-subtitle">Manage your account information and password</div></div>
+    <span class="section-num">14</span>
+  </div>
+  <div class="intro-box">The <strong>Profile</strong> page lets you update your personal details, change your password, and view your account information such as your plan type and member since date.</div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: My Profile Page</div><div class="ss-hint">Paste a screenshot of the profile page here</div></div>
+  <h3>Account Information</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Full Name <span class="req">*</span></td><td>Your display name shown throughout the app</td></tr>
+      <tr><td>Email Address <span class="req">*</span></td><td>Your login email. Changing this updates your login credentials.</td></tr>
+      <tr><td>Phone</td><td>Optional contact number</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:12px;color:#6b7280;margin:8px 0 16px;">Click <strong>"Save Changes"</strong> after updating any field.</p>
+  <h3>Changing Your Password</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Scroll to "Change Password"</strong><p>The password section is below the account info form.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>Enter your current password</strong><p>This is required to verify your identity before changing.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Enter and confirm your new password</strong><p>Must be at least 8 characters.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Click "Update Password"</strong><p>Your password is updated immediately.</p></div></div>
+  <h3>Account Details (Read-Only)</h3>
+  <div class="two-col">
+    <div class="card-block"><h4>📅 Member Since</h4><p style="font-size:12px;color:#6b7280;">The date your account was created.</p></div>
+    <div class="card-block"><h4>⭐ Current Plan</h4><p style="font-size:12px;color:#6b7280;">Shows "Free" or "Pro". Contact your planner to upgrade.</p></div>
+    <div class="card-block"><h4>💍 Wedding Workspace</h4><p style="font-size:12px;color:#6b7280;">Shows the bride and groom names from your wedding setup.</p></div>
+  </div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 14 — My Profile</span><span>Page 16</span></div>
+</div>
+
+<!-- PAGE 17 — SETTINGS -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">⚙️</div>
+    <div><div class="page-title playfair">Wedding Settings</div><div class="page-subtitle">Update your wedding details and support access</div></div>
+    <span class="section-num">15</span>
+  </div>
+  <div class="intro-box">The <strong>Wedding Settings</strong> page lets you update your wedding details at any time — names, type, date, and venue. It also controls whether your wedding planner can access your workspace.</div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Wedding Settings Page</div><div class="ss-hint">Paste a screenshot of the settings page here</div></div>
+  <h3>Wedding Details Form</h3>
+  <table class="field-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td>Bride's Name <span class="req">*</span></td><td>Update the bride's name shown across the app</td></tr>
+      <tr><td>Groom's Name <span class="req">*</span></td><td>Update the groom's name shown across the app</td></tr>
+      <tr><td>Wedding Type <span class="req">*</span></td><td>Changing this triggers a checklist update prompt (see below)</td></tr>
+      <tr><td>Wedding Date</td><td>Update or add your wedding date to activate the countdown</td></tr>
+      <tr><td>Venue</td><td>Update or add your wedding venue</td></tr>
+    </tbody>
+  </table>
+  <h3>Changing Wedding Type</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">If you change your wedding type, a confirmation modal appears with two options:</p>
+  <div class="two-col">
+    <div class="card-block"><h4>🔄 Replace Default Tasks Only</h4><p style="font-size:12px;color:#6b7280;">Removes pre-built checklist tasks and adds new ones for the new wedding type. Your custom tasks are kept.</p></div>
+    <div class="card-block"><h4>🗑️ Clear Entire Checklist</h4><p style="font-size:12px;color:#6b7280;">Removes ALL tasks including custom ones, then adds a fresh checklist for the new wedding type.</p></div>
+  </div>
+  <h3>Support Access (Admin Toggle)</h3>
+  <p style="font-size:12px;color:#6b7280;margin-bottom:10px;">The <strong>Support Access</strong> section lets you control whether your wedding planner can view and edit your workspace on your behalf.</p>
+  <div class="two-col">
+    <div class="card-block"><h4>🔒 Disabled (Default)</h4><p style="font-size:12px;color:#6b7280;">Only you can access your workspace. Recommended for normal use.</p></div>
+    <div class="card-block"><h4>🔓 Enabled</h4><p style="font-size:12px;color:#6b7280;">Your planner can view and edit your data. A warning banner appears at the top of every page. Last access time is shown.</p></div>
+  </div>
+  <div class="warn-box"><div class="tip-icon">⚠️</div><p>When admin access is enabled, a <strong>yellow warning banner</strong> appears at the top of every page. Toggle it off when you no longer need planner assistance.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 15 — Wedding Settings</span><span>Page 17</span></div>
+</div>
+
+<!-- PAGE 18 — UPGRADING -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">⭐</div>
+    <div><div class="page-title playfair">Upgrading to Pro</div><div class="page-subtitle">Unlock the full WedPlan Lanka experience</div></div>
+    <span class="section-num">16</span>
+  </div>
+  <div class="intro-box">The <strong>Pro Plan</strong> unlocks unlimited guests, tasks, and budget items, plus exclusive features like the Wedding Agenda, Invitation Cards, and Seating Plan. Upgrading is done by contacting your wedding planner via WhatsApp.</div>
+  <div class="screenshot" style="height:120px;"><div class="ss-icon">🖼️</div><div class="ss-label">Screenshot: Upgrade to Pro Modal</div><div class="ss-hint">Paste a screenshot of the upgrade modal here</div></div>
+  <h3>How to Upgrade</h3>
+  <div class="step"><div class="step-num">1</div><div class="step-body"><strong>Click "Upgrade to Pro" anywhere in the app</strong><p>You'll find this button in the sidebar banner, on the welcome page pricing section, or in feature-locked banners throughout the app.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-body"><strong>The Upgrade Modal Opens</strong><p>Shows the Pro plan price and a WhatsApp contact button.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-body"><strong>Click "Chat on WhatsApp"</strong><p>Opens a pre-filled WhatsApp message to the WedPlan Lanka team requesting an upgrade.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-body"><strong>Complete Payment</strong><p>The team will guide you through payment. Once confirmed, your account is upgraded to Pro immediately.</p></div></div>
+  <h3>Where to Find the Upgrade Button</h3>
+  <ul class="checklist">
+    <li>Sidebar bottom banner (visible to all Free users)</li>
+    <li>Welcome page — Pricing section — Pro Plan card</li>
+    <li>Budget page — when the free limit is reached</li>
+    <li>Guest page — Bride/Groom list feature banner</li>
+    <li>Sidebar — locked Pro feature links (Agenda, Invitation, Seating)</li>
+  </ul>
+  <div class="tip-box"><div class="tip-icon">💡</div><p>The Pro plan is a <strong>one-time payment per wedding</strong>. Once upgraded, you have lifetime access to all Pro features for your wedding workspace.</p></div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 16 — Upgrading to Pro</span><span>Page 18</span></div>
+</div>
+
+<!-- PAGE 19 — PLAN COMPARISON -->
+<div class="page">
+  <div class="page-header">
+    <div class="page-icon">📋</div>
+    <div><div class="page-title playfair">Free vs Pro Plan</div><div class="page-subtitle">Full feature comparison</div></div>
+    <span class="section-num">17</span>
+  </div>
+  <div class="intro-box">Use this table to understand exactly what is included in each plan and decide when to upgrade to Pro.</div>
+  <table class="field-table">
+    <thead>
+      <tr>
+        <th style="width:45%;">Feature</th>
+        <th style="text-align:center;">Free Plan</th>
+        <th style="text-align:center;">Pro Plan</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr><td style="font-weight:700;color:#6b7280;font-size:11px;text-transform:uppercase;letter-spacing:.05em;" colspan="3">Core Features</td></tr>
+      <tr><td>Wedding Dashboard</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>Wedding Checklist</td><td style="text-align:center;">Up to 20 tasks</td><td style="text-align:center;color:#10b981;font-weight:700;">Unlimited</td></tr>
+      <tr><td>Budget Tracker</td><td style="text-align:center;">Up to 5 items</td><td style="text-align:center;color:#10b981;font-weight:700;">Unlimited</td></tr>
+      <tr><td>Guest Management</td><td style="text-align:center;">Up to 30 guests</td><td style="text-align:center;color:#10b981;font-weight:700;">Unlimited</td></tr>
+      <tr><td>Wedding Vault (File Storage)</td><td style="text-align:center;">5 files</td><td style="text-align:center;color:#10b981;font-weight:700;">100 files</td></tr>
+      <tr><td>Wedding Notes</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003; Unlimited</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003; Unlimited</td></tr>
+      <tr><td>Pre-built Checklist Templates</td><td style="text-align:center;">Basic</td><td style="text-align:center;color:#10b981;font-weight:700;">All templates</td></tr>
+      <tr><td style="font-weight:700;color:#6b7280;font-size:11px;text-transform:uppercase;letter-spacing:.05em;" colspan="3">Pro-Only Features</td></tr>
+      <tr><td>Wedding Agenda + Nekath Time</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>Digital Invitation Cards (6 templates)</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>Seating Plan</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>Separate Bride &amp; Groom Guest Lists</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>CSV Guest Import / Export / Print</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td>Priority Support</td><td style="text-align:center;color:#ef4444;">&#10007;</td><td style="text-align:center;color:#10b981;font-weight:700;">&#10003;</td></tr>
+      <tr><td style="font-weight:700;color:#6b7280;font-size:11px;text-transform:uppercase;letter-spacing:.05em;" colspan="3">Pricing</td></tr>
+      <tr><td>Price</td><td style="text-align:center;font-weight:700;">LKR 0 / forever</td><td style="text-align:center;font-weight:700;color:#db2777;">LKR 2,999 / wedding</td></tr>
+      <tr><td>Payment Type</td><td style="text-align:center;">Free forever</td><td style="text-align:center;">One-time payment</td></tr>
+    </tbody>
+  </table>
+  <div class="tip-box" style="margin-top:20px;"><div class="tip-icon">💡</div><p>To upgrade, click any <strong>"Upgrade to Pro"</strong> button in the app and contact the WedPlan Lanka team via WhatsApp. Upgrades take effect immediately after payment confirmation.</p></div>
+  <div style="margin-top:32px;padding:20px;background:linear-gradient(135deg,#db2777,#9333ea);border-radius:16px;text-align:center;">
+    <p style="color:#fff;font-size:18px;font-family:'Playfair Display',serif;font-weight:700;margin-bottom:6px;">Ready to plan your perfect wedding?</p>
+    <p style="color:rgba(255,255,255,0.8);font-size:12px;">Visit wedplanlanka.com and start for free today — no credit card required.</p>
+    <p style="color:#fce7f3;font-size:13px;font-weight:600;margin-top:10px;">Made with ❤️ in Sri Lanka 🇱🇰</p>
+  </div>
+  <div class="page-footer"><span class="pf-brand">WedPlan Lanka</span><span>Section 17 — Plan Comparison</span><span>Page 19</span></div>
+</div>
+
+</body>
+</html>
